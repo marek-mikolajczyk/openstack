@@ -1,0 +1,120 @@
+---
+# tasks file for packstack-configure
+
+- name: deploy lab key
+  authorized_key:
+    user: root
+    state: present
+    key: "{{root_key }}"
+
+- name: register to RedHat
+  redhat_subscription:
+    state: present
+    username: "{{ rh_user }}"
+    password: "{{ rh_password }}"
+    auto_attach: true
+    pool_ids: "{{ rh_pool }}"
+
+- name: enable RedHat repos
+  rhsm_repository:
+    name: "{{ item }}"
+  loop:
+    - rhel-7-server-rpms
+    - rhel-7-server-rh-common-rpms
+    - rhel-7-server-extras-rpms
+    - rhel-7-server-openstack-13-rpms
+    - rhel-7-server-openstack-13-devtools-rpms
+
+- name: install some packages
+  yum:
+    name: yum-utils
+    state: present
+
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: enable network services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: 
+    - network
+
+- name: disable network services
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  loop: 
+    - NetworkManager
+    - firewalld
+
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 300
+
+- name: install package
+  yum:
+    name: openstack-packstack
+    state: present
+  
+
+- name: configure openstack
+  shell: >
+      packstack --allinone \
+      --os-neutron-l2-agent=openvswitch \
+      --os-neutron-ml2-mechanism-drivers=openvswitch \
+      --os-neutron-ml2-tenant-network-types=vxlan \
+      --os-neutron-ml2-type-drivers=vxlan,flat \
+      --provision-demo=n \
+      --os-neutron-ovs-bridge-mappings=extnet:br-ex \
+      --os-neutron-ovs-bridge-interfaces=br-ex:enp0s25
+
+
+- name: update eth for openstack 1
+  template:
+    src: ifcfg-br-ex.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-br-ex
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: update eth for openstack 2
+  template:
+    src: ifcfg-enp0s25.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-enp0s25
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: restart network
+  shell: systemctl restart network
+
+- name: create neutron network
+  shell: >
+    source /root/keystonerc_admin ; \
+    neutron net-create external_network \
+    --provider:network_type flat \
+    --provider:physical_network extnet  \
+    --router:external
+   
+- name: create neutron subnet
+  shell: >
+    neutron subnet-create 
+    --name public_subnet \
+    --enable_dhcp=False \
+    --allocation-pool=start=192.168.0.220,end=192.168.0.250 \
+    --gateway=192.168.0.1 external_network 192.168.0.0/24
+
+- name: import images cirros
+  shell: curl -L http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img | glance \
+         image-create --name='cirros image' \
+         --visibility=public \
+         --container-format=bare \
+         --disk-format=qcow2

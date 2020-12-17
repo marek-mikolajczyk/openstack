@@ -1,0 +1,7 @@
+[centos]
+001-1  ansible_host=192.168.0.250
+001-2  ansible_host=192.168.0.238
+001-3  ansible_host=192.168.0.223
+
+[centos:vars]
+ansible_ssh_user=centos

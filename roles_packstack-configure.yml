@@ -1,0 +1,5 @@
+- name: configure openstack via packstack
+  hosts: all
+  become: true
+  roles:
+   - packstack-configure

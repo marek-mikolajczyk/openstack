@@ -1,0 +1,5 @@
+Host openstack openstack.marekexample.com 192.168.0.12
+  User root
+  IdentityFile  /root/.ssh/id_rsa_marekexample_openstack
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
