@@ -9,6 +9,8 @@ resource "openstack_compute_instance_v2" "compute" {
   flavor_id       = var.flavor_number
   key_pair        = "project1-keypair"
   security_groups = ["default"]
+  tags            = [var.instance_environment]
+  
 
   network {
     name = "private_network"
