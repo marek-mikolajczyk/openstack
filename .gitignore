@@ -1,3 +1,4 @@
+credentials.tf
 ./credentials.tf
 ./*/credentials.tf
 ./*/*/credentials.tf

@@ -781,7 +781,7 @@ CONFIG_NEUTRON_METADATA_PW=6eef30d92ca0459b
 
 # Specify 'y' to install OpenStack Networking's Load-Balancing-
 # as-a-Service (LBaaS). ['y', 'n']
-CONFIG_LBAAS_INSTALL=n
+CONFIG_LBAAS_INSTALL=y
 
 # Specify 'y' to install OpenStack Networking's L3 Metering agent
 # ['y', 'n']
