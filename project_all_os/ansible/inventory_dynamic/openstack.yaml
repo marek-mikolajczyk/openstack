@@ -1,0 +1,6 @@
+plugin: openstack
+use_hostnames: True
+expand_hostvars: False
+fail_on_errors: True
+clouds_yaml_path: /root/.config/openstack/clouds.yaml
+only_clouds: all_os

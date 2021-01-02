@@ -1,0 +1,8 @@
+#ansible:
+#  use_hostnames: True
+#  expand_hostvars: False
+#  fail_on_errors: True
+#  cloud: all_os
+#  clouds_yaml_path: "../../secrets/all_os.yaml"
+#  inventory_hostname: name
+#  use_hostnames: yes

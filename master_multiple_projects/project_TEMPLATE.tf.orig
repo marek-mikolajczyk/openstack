@@ -1,0 +1,28 @@
+resource "openstack_identity_project_v3" "project_PROJECTNAME" {
+  name        = "PROJECTNAME"
+}
+
+resource "openstack_identity_user_v3" "admin_user_PROJECTNAME" {
+  default_project_id = openstack_identity_project_v3.project_PROJECTNAME.id
+  name               = "PROJECTNAME-admin"
+  description        = "Admin account"
+  password 			 = "foo"
+  ignore_change_password_upon_first_use = true
+}
+
+resource "openstack_identity_role_assignment_v3" "role_admin_to_user_assignment_PROJECTNAME" {
+  user_id  	 = openstack_identity_user_v3.admin_user_PROJECTNAME.id
+  project_id = openstack_identity_project_v3.project_PROJECTNAME.id
+  role_id    = data.openstack_identity_role_v3.admin.id
+}
+
+resource "openstack_objectstorage_container_v1" "project_bucket_PROJECTNAME" {
+  region = "RegionOne"
+  name   = "PROJECTNAME"
+}
+
+
+resource "openstack_objectstorage_container_v1" "project_bucket_archive_PROJECTNAME" {
+  region = "RegionOne"
+  name   = "PROJECTNAME_archive"
+}

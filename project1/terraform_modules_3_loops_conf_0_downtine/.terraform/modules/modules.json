@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"stg","Source":"./stg","Dir":"stg"},{"Key":"stg.instances-db","Source":"../modules/stg/compute/","Dir":"modules/stg/compute"},{"Key":"","Source":"","Dir":"."}]}

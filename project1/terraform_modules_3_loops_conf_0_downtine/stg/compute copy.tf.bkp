@@ -1,0 +1,34 @@
+module "instances-db" {
+	source = "../modules/stg/compute/"
+
+	count = 1
+
+	compute_name	= "ins-db-${count.index}"
+    flavor_name		= "c1m1"
+	volume_name		= "vol-ins-db-${count.index}-1"
+	instance_environment 	= local.instance_environment_local	
+}
+
+module "instances-nfs" {
+	source = "../modules/stg/compute/"
+
+	count = 1
+
+	compute_name	= "ins-nfs-${count.index}"
+    flavor_name		= "c1m1"
+	volume_name		= "vol-ins-nfs-${count.index}-1"
+	instance_environment 	= local.instance_environment_local	
+}
+
+module "instances-web" {
+	source = "../modules/stg/compute/"
+
+	count = 2
+
+	compute_name	= "ins-web-${count.index}"
+    flavor_name		= "c1m1"
+	volume_name		= "vol-ins-web-${count.index}-1"
+	instance_environment 	= local.instance_environment_local
+
+		
+}

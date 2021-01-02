@@ -1,3 +1,8 @@
+data  "openstack_images_image_v2" "ubuntu" {
+  name        = "ubuntu20.4_shell_script"
+  most_recent = true
+}
+
 resource "openstack_blockstorage_volume_v2" "volume" {
   name = var.volume_name
   size = 1
@@ -5,8 +10,8 @@ resource "openstack_blockstorage_volume_v2" "volume" {
 
 resource "openstack_compute_instance_v2" "compute" {
   name            = var.compute_name
-  image_id        = var.image_number
-  flavor_id       = var.flavor_number
+  image_id      = data.openstack_images_image_v2.ubuntu.id
+  flavor_name       = var.flavor_name
   key_pair        = "project1-keypair"
   security_groups = ["default"]
   tags            = [var.instance_environment]

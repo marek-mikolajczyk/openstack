@@ -6,7 +6,7 @@ resource "openstack_blockstorage_volume_v2" "vol-005" {
 resource "openstack_compute_instance_v2" "ins-005" {
   name            = "ins-005"
   image_id        = "512b4772-e26c-4667-886c-dc9bf71f5e32"
-  flavor_id       = "9dbd2255-0da4-433b-a137-2eb5d3c6fb0b"
+  flavor_name       = "c1m1"
   key_pair        = "project1-keypair"
   security_groups = ["default"]
 

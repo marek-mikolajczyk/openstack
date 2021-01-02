@@ -1,0 +1,58 @@
+data  "openstack_images_image_v2" "FLAVOR" {
+  name        = "FLAVOR"
+  most_recent = true
+}
+
+module "FLAVOR_instance" {
+	source = "../modules/stg/compute/"
+  depends_on = [
+      module.private_network
+      ]
+
+	instance_name	= "FLAVOR"
+	image_id		= data.openstack_images_image_v2.FLAVOR.id
+    flavor_name		= "c1m2"
+#	volume_name		= "FLAVOR_os"
+	key_pair		= "all_os-keypair"
+	security_groups = ["all_os-secgroup1"]
+	external_network = "all_os-private-network"
+	tf_environment	= "stg"
+}
+
+/*
+module "FLAVOR_volume" {
+	source = "../modules/stg/volume/"
+
+	volume_name		= "FLAVOR-data"
+	volume_size		= "2"
+    instance_id		= module.FLAVOR_instance.instance_id
+	volume_id		= var.openstack_blockstorage_volume_v2.volume.id
+}
+*/
+
+resource "openstack_blockstorage_volume_v2" "FLAVOR_data_volume" {
+  name = "FLAVOR_data"
+  size = "2"
+}
+
+resource "openstack_compute_volume_attach_v2" "FLAVOR_volume_attached" {
+  instance_id = module.FLAVOR_instance.instance_id
+  volume_id   = openstack_blockstorage_volume_v2.FLAVOR_data_volume.id
+}
+
+
+
+
+
+resource "openstack_compute_floatingip_v2" "FLAVOR-floating_ip" {
+  pool = "external_network"
+}
+
+
+
+resource "openstack_compute_floatingip_associate_v2" "FLAVOR-floating_ip_associate" {
+  floating_ip = openstack_compute_floatingip_v2.FLAVOR-floating_ip.address
+  instance_id = module.FLAVOR_instance.instance_id
+
+
+}

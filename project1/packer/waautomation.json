@@ -1,0 +1,33 @@
+{
+  "_comment": "Packer for AWX installation",
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "webanywhere",
+      "region": "eu-west-2",
+      "source_ami": "ami-0aa3620fadad9198e",
+      "instance_type": "t3a.medium",
+      "ssh_username": "centos",
+      "ami_name": "packer_ansible-waautomation-{{isotime \"20060102_150405\"}}",
+      "subnet_id": "subnet-0798e58af49c2cf93",
+      "associate_public_ip_address": true,
+      "tags": {
+        "Name": "webanywhere",
+        "cost-allocation": "primary"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 5; done"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "centos",
+      "playbook_file": "packer.yml"
+    }
+   ]
+}

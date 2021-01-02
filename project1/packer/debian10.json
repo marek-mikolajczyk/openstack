@@ -1,0 +1,34 @@
+{
+  "_comment": "Packer for webanywhere-devops project, currently used AMI is Debian 10, default and manually created subnet",
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "webanywhere-devops",
+      "region": "eu-west-1",
+      "source_ami": "ami-019745dc682c2e518",
+      "instance_type": "t2.micro",
+      "ssh_username": "admin",
+      "ami_name": "packer_ansible-debian10-{{isotime \"20060102_150405\"}}",
+      "subnet_id": "subnet-0069eee05e54694ee",
+      "associate_public_ip_address": true,
+      "tags": {
+        "Name": "packer_ansible-debian10",
+        "cost-allocation": "primary"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 5; done"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "admin",
+      "playbook_file": "packer.yml",
+      "extra_arguments": [ "--tags", "packer" ]
+    }
+   ]
+}

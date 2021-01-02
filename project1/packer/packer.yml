@@ -1,0 +1,15 @@
+- name: launch all
+  vars_files:
+    - ./packer.vars
+  hosts: all
+  become: true
+  roles:
+    - ../roles/os_management
+    - ../roles/user_management
+    - ../roles/devops_management 
+    - ../roles/aws_service-manager
+    - { role: ../roles/aws_s3fuse }
+    - ../roles/aws_awscliv2
+    - { role: ../roles/zabbix-agent-4 }
+#    - role: apache_configuration
+#    - role: php_configuration

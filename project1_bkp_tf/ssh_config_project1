@@ -1,4 +1,0 @@
-Host *
-  IdentityFile  project1-keypair.pem
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null

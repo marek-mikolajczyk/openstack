@@ -2,11 +2,13 @@ variable "compute_name" {
     description = "value"
     type = string
 }
-variable "image_number" {
+/*
+variable "image_name" {
     description = "value"
     type = string
 }
-variable "flavor_number" {
+*/
+variable "flavor_name" {
     description = "value"
     type = string
 }
