@@ -1,0 +1,56 @@
+{
+  "variables": {
+      "project5-elk_username": "project5-elk-admin",
+      "project5-elk_password": "foo"
+  },
+  "builders": [{
+  "type": "openstack",
+  "identity_endpoint": "http://192.168.0.12:5000/v3",
+  "tenant_name": "project5-elk",
+  "domain_name": "Default",
+  "username": "{{ user `project5-elk_username`}}",
+  "password": "{{ user `project5-elk_password`}}",
+  "region": "RegionOne",
+  "floating_ip_network": "external_network",
+  "instance_floating_ip_net": "project5-elk-private-network",
+  "security_groups": "project5-elk-secgroup1",
+  "force_delete": "1",
+  "ssh_username": "ubuntu",
+  "image_name": "project5-elk_shell_script",
+  "source_image": "512b4772-e26c-4667-886c-dc9bf71f5e32",
+  "flavor": "c1m1",
+  "insecure": "true",
+  "image_tags": ["created-{{ timestamp }}"]
+  }],
+  "provisioners": [
+    {
+        "type": "file",
+        "source": "../shell_script/ssh_config.sh",
+        "destination": "~/ssh_config.sh"
+    },
+    {
+        "type": "file",
+        "source": "../shell_script/ubuntu_rescue-account.sh",
+        "destination": "~/ubuntu_rescue-account.sh"
+    },
+    {
+        "type": "file",
+        "source": "../shell_script/ubuntu_simple_webserver.sh",
+        "destination": "~/ubuntu_simple_webserver.sh"
+    },
+    {
+        "type": "file",
+        "source": "../shell_script/ubuntu-beats.sh",
+        "destination": "~/ubuntu-beats.sh"
+    },
+    {
+        "type": "shell",
+        "inline": [
+          "sudo /home/ubuntu/ubuntu_simple_webserver.sh",
+          "sudo /home/ubuntu/ubuntu_rescue-account.sh",
+          "sudo /home/ubuntu/ubuntu-beats.sh",
+          "sudo /home/ubuntu/ssh_config.sh"
+        ]
+    }
+    ]
+}
