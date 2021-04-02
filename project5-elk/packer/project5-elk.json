@@ -35,6 +35,11 @@
     },
     {
         "type": "file",
+        "source": "../shell_script/packages.sh",
+        "destination": "~/packages.sh"
+    },
+    {
+        "type": "file",
         "source": "../shell_script/ubuntu_simple_webserver.sh",
         "destination": "~/ubuntu_simple_webserver.sh"
     },
@@ -46,6 +51,7 @@
     {
         "type": "shell",
         "inline": [
+          "sudo /home/ubuntu/packages.sh",
           "sudo /home/ubuntu/ubuntu_simple_webserver.sh",
           "sudo /home/ubuntu/ubuntu_rescue-account.sh",
           "sudo /home/ubuntu/ubuntu-beats.sh",
