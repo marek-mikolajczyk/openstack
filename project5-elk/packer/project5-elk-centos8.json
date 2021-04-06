@@ -1,0 +1,44 @@
+{
+  "variables": {
+      "project5-elk_username": "project5-elk-admin",
+      "project5-elk_password": "foo"
+  },
+  "builders": [{
+  "type": "openstack",
+  "identity_endpoint": "http://192.168.0.12:5000/v3",
+  "tenant_name": "project5-elk",
+  "domain_name": "Default",
+  "username": "{{ user `project5-elk_username`}}",
+  "password": "{{ user `project5-elk_password`}}",
+  "region": "RegionOne",
+  "floating_ip_network": "external_network",
+  "instance_floating_ip_net": "project5-elk-private-network",
+  "security_groups": "project5-elk-secgroup1",
+  "force_delete": "1",
+  "ssh_username": "centos",
+  "image_name": "project5-elk_shell_script-centos8",
+  "source_image": "657295bf-37aa-4e1f-9b98-43d947aca12c",
+  "flavor": "c1m1",
+  "insecure": "true",
+  "image_tags": ["created-{{ timestamp }}"]
+  }],
+  "provisioners": [
+    {
+        "type": "file",
+        "source": "../shell_script/centos_rescue-account.sh",
+        "destination": "~/ubuntu_rescue-account.sh"
+    },
+    {
+        "type": "file",
+        "source": "../shell_script/packages.sh",
+        "destination": "~/packages.sh"
+    },
+    {
+        "type": "shell",
+        "inline": [
+          "sudo /home/centos/centos_rescue-account.sh",
+          "sudo /home/centos/ssh_config.sh"
+        ]
+    }
+    ]
+}
