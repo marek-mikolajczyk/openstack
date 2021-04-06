@@ -10,7 +10,7 @@ module "webserver_instance" {
       module.private_network
       ]
 
-  for_each = toset( ["1", "2", "3" ] ) 
+  for_each = toset( ["1" ] ) 
 
 	instance_name	= "webserver-${each.key}"
 
@@ -26,11 +26,11 @@ module "webserver_instance" {
 
 resource "openstack_networking_floatingip_v2" "webserver-floating_ip" {
   pool = "external_network"
-  for_each = toset( ["1", "2", "3" ] )
+  for_each = toset( ["1" ] )
 }
 
 resource "openstack_compute_floatingip_associate_v2" "webserver-floating_ip_associate" {
-  for_each = toset( ["1", "2", "3" ] )
+  for_each = toset( ["1" ] )
 
   floating_ip = openstack_networking_floatingip_v2.webserver-floating_ip[each.key].address
 #  instance_id = module.webserver_instance.instance_id

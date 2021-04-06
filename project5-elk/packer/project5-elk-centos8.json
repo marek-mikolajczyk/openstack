@@ -26,18 +26,18 @@
     {
         "type": "file",
         "source": "../shell_script/centos_rescue-account.sh",
-        "destination": "~/ubuntu_rescue-account.sh"
+        "destination": "~/centos_rescue-account.sh"
     },
     {
         "type": "file",
-        "source": "../shell_script/packages.sh",
-        "destination": "~/packages.sh"
+        "source": "../shell_script/ssh_config.sh",
+        "destination": "~/ssh_config.sh"
     },
     {
         "type": "shell",
         "inline": [
-          "sudo /home/centos/centos_rescue-account.sh",
-          "sudo /home/centos/ssh_config.sh"
+          "sudo ~/centos_rescue-account.sh",
+          "sudo ~/ssh_config.sh"
         ]
     }
     ]
