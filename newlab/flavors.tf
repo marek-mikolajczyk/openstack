@@ -8,7 +8,7 @@ resource "openstack_compute_flavor_v2" "marekexample_micro_c1m256d3" {
 }
 
 resource "openstack_compute_flavor_v2" "marekexample_tiny_c1m512d3" {
-  name      = "marekexample_tiny_c1m512d5"
+  name      = "marekexample_tiny_c1m512d3"
   ram       = "512"
   vcpus     = "1"
   disk      = "3"
