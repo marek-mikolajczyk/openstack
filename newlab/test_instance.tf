@@ -5,13 +5,21 @@ resource "openstack_compute_instance_v2" "admin_001" {
   key_pair        = "admin-keypair"
   security_groups = ["secgroup_1"]
 
+  block_device {
+    uuid                  = "83bb3ac8-313b-4cce-b3f2-85ad0bdebe98"
+    source_type           = "image"
+    volume_size           = 3
+    boot_index            = 0
+    destination_type      = "volume"
+    delete_on_termination = true
+  }
 
   network {
-    name = "network_1"
+    name = "external_network"
   }
 }
 
-
+/*
 resource "openstack_networking_floatingip_v2" "admin_001-floating_ip" {
   pool = "external_network"
 }
@@ -21,3 +29,4 @@ resource "openstack_compute_floatingip_associate_v2" "admin_001-floating_ip_asso
   floating_ip = openstack_networking_floatingip_v2.admin_001-floating_ip.address
   instance_id = openstack_compute_instance_v2.admin_001.id
 }
+*/

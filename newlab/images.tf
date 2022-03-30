@@ -11,9 +11,9 @@ resource "openstack_images_image_v2" "ubuntu_2110_minimal" {
 }
 
 
-resource "openstack_images_image_v2" "ubuntu_2004_minimal" {
+resource "openstack_images_image_v2" "ubuntu_2004" {
   name             = "ubuntu_2004"
-  image_source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img"
+  image_source_url = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
   container_format = "bare"
   disk_format      = "qcow2"
   visibility       = "public"
