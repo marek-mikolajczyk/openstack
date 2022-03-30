@@ -1,5 +1,5 @@
 resource "openstack_compute_flavor_v2" "marekexample_micro_c1m256d3" {
-  name      = "marekexample_micro_c1m256d3"
+  name      = "marekexample_micro_c1m256d1"
   ram       = "256"
   vcpus     = "1"
   disk      = "1"
