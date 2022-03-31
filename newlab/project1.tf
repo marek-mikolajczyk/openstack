@@ -12,7 +12,7 @@ resource "openstack_networking_subnet_v2" "subnet_1" {
 resource "openstack_networking_router_v2" "router_1" {
   name                = "router_1"
   admin_state_up      = true
-  external_network_id = "8becb0d8-a135-4d55-861e-cfdd6ceae989"
+  external_network_id = "915fd3ba-8289-416c-9427-4b3d81817d88"
 }
 
 resource "openstack_networking_router_interface_v2" "router_interface_1" {

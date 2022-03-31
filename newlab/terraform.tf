@@ -16,6 +16,6 @@ terraform {
 provider "openstack" {
   user_name   = "admin"
   tenant_name = "admin"
-  auth_url    = "http://192.168.0.72:5000/v3"
+  auth_url    = "http://192.168.0.75:5000/v3"
   region      = "RegionOne"
 }

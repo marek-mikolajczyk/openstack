@@ -75,7 +75,7 @@ dd if=/dev/zero of=/tmp/test.img bs=512 count=1000 oflag=dsync ; rm -f /tmp/test
 512000 bytes (512 kB, 500 KiB) copied, 100.65 s, 5.1 kB/s
 ```
 
-from direct lun from nas
+# from direct lun from nas
 ```
 dd if=/dev/zero of=/tmp/test/test.img conv=fdatasync bs=384k count=1k; rm -f /tmp/test.img
 402653184 bytes (403 MB, 384 MiB) copied, 3.89207 s, 103 MB/s
@@ -83,4 +83,55 @@ dd if=/dev/zero of=/tmp/test/test.img bs=1G count=1 oflag=dsync; rm -f /tmp/test
 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 12.4874 s, 86.0 MB/s
 dd if=/dev/zero of=/tmp/test/test.img bs=512 count=1000 oflag=dsync ; rm -f /tmp/test/test.img
 512000 bytes (512 kB, 500 KiB) copied, 2.2388 s, 229 kB/s
+```
+
+# direct lun from hypervisor sata as fileio
+```
+dd if=/dev/zero of=/sata/test.img conv=fdatasync bs=384k count=1k; rm -f /sata/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 4.12288 s, 97.7 MB/s
+dd if=/dev/zero of=/sata/test.img bs=1G count=1 oflag=dsync; rm -f /sata/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 10.0976 s, 106 MB/s
+dd if=/dev/zero of=/sata/test.img bs=512 count=1000 oflag=dsync ; rm -f /sata/test.img
+512000 bytes (512 kB, 500 KiB) copied, 18.5832 s, 27.6 kB/s
+```
+
+# direct lun from hypervisor sata as block
+
+dd if=/dev/zero of=/sata/test.img conv=fdatasync bs=384k count=1k; rm -f /sata/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 3.77183 s, 107 MB/s
+dd if=/dev/zero of=/sata/test.img bs=1G count=1 oflag=dsync; rm -f /sata/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 11.3113 s, 94.9 MB/s
+dd if=/dev/zero of=/sata/test.img bs=512 count=1000 oflag=dsync ; rm -f /sata/test.img
+512000 bytes (512 kB, 500 KiB) copied, 50.0605 s, 10.2 kB/s
+
+# direct lun from hypervisor ssd as fileio
+```
+dd if=/dev/zero of=/ssd/test.img conv=fdatasync bs=384k count=1k; rm -f /ssd/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 7.8242 s, 51.5 MB/s
+dd if=/dev/zero of=/ssd/test.img bs=1G count=1 oflag=dsync; rm -f /ssd/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 20.9817 s, 51.2 MB/s
+dd if=/dev/zero of=/ssd/test.img bs=512 count=1000 oflag=dsync ; rm -f /ssd/test.img
+512000 bytes (512 kB, 500 KiB) copied, 3.04782 s, 168 kB/s
+```
+
+
+# direct lun from hypervisor ssd on localhost as fileio
+```
+dd if=/dev/zero of=/ssd/test.img conv=fdatasync bs=384k count=1k; rm -f /ssd/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 7.06349 s, 57.0 MB/s
+dd if=/dev/zero of=/ssd/test.img bs=1G count=1 oflag=dsync; rm -f /ssd/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 13.5815 s, 79.1 MB/s
+dd if=/dev/zero of=/ssd/test.img bs=512 count=1000 oflag=dsync ; rm -f /ssd/test.img
+512000 bytes (512 kB, 500 KiB) copied, 2.8658 s, 179 kB/s
+```
+
+
+# direct lun from hypervisor sata on localhost as block
+```
+dd if=/dev/zero of=/sata/test.img conv=fdatasync bs=384k count=1k; rm -f /sata/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 3.83906 s, 105 MB/s
+dd if=/dev/zero of=/sata/test.img bs=1G count=1 oflag=dsync; rm -f /sata/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 11.4232 s, 94.0 MB/s
+dd if=/dev/zero of=/sata/test.img bs=512 count=1000 oflag=dsync ; rm -f /sata/test.img
+512000 bytes (512 kB, 500 KiB) copied, 49.7671 s, 10.3 kB/s
 ```
