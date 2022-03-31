@@ -1,10 +1,9 @@
 resource "openstack_compute_instance_v2" "admin_003" {
   name            = "admin_003"
   image_name      = "centos_84"
-  flavor_name     = "marekexample_small_c1m1024d5"
+  flavor_name     = "marekexample_small_c1m1024d10"
   key_pair        = "admin-keypair"
   security_groups = ["secgroup_1"]
-  admin_pass      = "haslo123"
 
   network {
     name = "network_1"

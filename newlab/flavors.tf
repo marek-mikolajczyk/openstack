@@ -22,3 +22,11 @@ resource "openstack_compute_flavor_v2" "marekexample_small_c1m1024d5" {
   disk      = "5"
   is_public = true
 }
+
+resource "openstack_compute_flavor_v2" "marekexample_small_c1m1024d10" {
+  name      = "marekexample_small_c1m1024d10"
+  ram       = "1024"
+  vcpus     = "1"
+  disk      = "10"
+  is_public = true
+}

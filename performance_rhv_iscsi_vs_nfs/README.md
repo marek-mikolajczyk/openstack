@@ -61,3 +61,26 @@ dd if=/dev/zero of=/disktest/nfs/test_nfs.img bs=512 count=1000 oflag=dsync ; rm
 dd if=/dev/zero of=/tmp/local_ssd_from_nfs bs=512 count=1000 oflag=dsync ; rm -f /tmp/local_ssd_from_nfs
 512000 bytes (512 kB, 500 KiB) copied, 1.75572 s, 292 kB/s
 ```
+
+
+# last comparison
+
+from nfs local from hypervisor
+```
+dd if=/dev/zero of=/tmp/test.img conv=fdatasync bs=384k count=1k; rm -f /tmp/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 17.6829 s, 22.8 MB/s
+dd if=/dev/zero of=/tmp/test.img.img bs=1G count=1 oflag=dsync; rm -f /tmp/test.img.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 58.9275 s, 18.2 MB/s
+dd if=/dev/zero of=/tmp/test.img bs=512 count=1000 oflag=dsync ; rm -f /tmp/test.img
+512000 bytes (512 kB, 500 KiB) copied, 100.65 s, 5.1 kB/s
+```
+
+from direct lun from nas
+```
+dd if=/dev/zero of=/tmp/test/test.img conv=fdatasync bs=384k count=1k; rm -f /tmp/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 3.89207 s, 103 MB/s
+dd if=/dev/zero of=/tmp/test/test.img bs=1G count=1 oflag=dsync; rm -f /tmp/test/test.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 12.4874 s, 86.0 MB/s
+dd if=/dev/zero of=/tmp/test/test.img bs=512 count=1000 oflag=dsync ; rm -f /tmp/test/test.img
+512000 bytes (512 kB, 500 KiB) copied, 2.2388 s, 229 kB/s
+```
