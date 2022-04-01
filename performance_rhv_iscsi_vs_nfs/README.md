@@ -135,3 +135,25 @@ dd if=/dev/zero of=/sata/test.img bs=1G count=1 oflag=dsync; rm -f /sata/test.im
 dd if=/dev/zero of=/sata/test.img bs=512 count=1000 oflag=dsync ; rm -f /sata/test.img
 512000 bytes (512 kB, 500 KiB) copied, 49.7671 s, 10.3 kB/s
 ```
+
+
+rhv2 - local speed ssd vs sata
+
+
+```
+dd if=/dev/zero of=/tmp/test.img conv=fdatasync bs=384k count=1k; rm -f /tmp/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 8.29178 s, 48.6 MB/s
+dd if=/dev/zero of=/tmp/test.img.img bs=1G count=1 oflag=dsync; rm -f /tmp/test.img.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 21.6896 s, 49.5 MB/s
+dd if=/dev/zero of=/tmp/test.img bs=512 count=1000 oflag=dsync ; rm -f /tmp/test.img
+512000 bytes (512 kB, 500 KiB) copied, 1.85863 s, 275 kB/s
+
+
+
+dd if=/dev/zero of=/sata/test.img conv=fdatasync bs=384k count=1k; rm -f /sata/test.img
+402653184 bytes (403 MB, 384 MiB) copied, 3.65574 s, 110 MB/s
+dd if=/dev/zero of=/sata/test.img.img bs=1G count=1 oflag=dsync; rm -f /sata/test.img.img
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 11.5854 s, 92.7 MB/s
+dd if=/dev/zero of=/sata/test.img bs=512 count=1000 oflag=dsync ; rm -f /sata/test.img
+512000 bytes (512 kB, 500 KiB) copied, 51.2071 s, 10.0 kB/s
+```
